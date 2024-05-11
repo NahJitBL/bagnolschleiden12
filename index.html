@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Earth Rotation Animation</title>
+  <style>
+    canvas {
+      border: 1px solid black;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="earthCanvas" width="800" height="600"></canvas>
+  <script>
+    const canvas = document.getElementById('earthCanvas');
+    const ctx = canvas.getContext('2d');
+
+    const earthImage = new Image();
+    earthImage.src = 'https://emojicdn.elk.sh/🌍';
+    
+    const spaceImage = new Image();
+    spaceImage.src = 'https://emojicdn.elk.sh/🌌';
+
+    let earthAngle = 0;
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      // Draw space background
+      ctx.drawImage(spaceImage, 0, 0, canvas.width, canvas.height);
+      
+      // Save the current drawing state
+      ctx.save();
+      
+      // Translate to the center of the canvas
+      ctx.translate(canvas.width / 2, canvas.height / 2);
+      
+      // Rotate the Earth
+      ctx.rotate(earthAngle);
+      
+      // Draw the Earth image
+      ctx.drawImage(earthImage, -50, -50, 100, 100);
+      
+      // Restore the previous drawing state
+      ctx.restore();
+      
+      // Increase the Earth's rotation angle for next frame
+      earthAngle += Math.PI / 180; // Rotate by 1 degree per frame
+      
+      requestAnimationFrame(draw);
+    }
+
+    draw();
+  </script>
+</body>
+</html>
